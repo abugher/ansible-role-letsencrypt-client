@@ -1,3 +1,44 @@
 ---
+certbot_minute:         "{{ hostvars[inventory_hostname]['certbot_minute']|default('00') }}"
+certbot_hour:           "{{ hostvars[inventory_hostname]['certbot_hour']|default('00') }}"
+certbot_dow:            "{{ hostvars[inventory_hostname]['certbot_dow']|default('*') }}"
 install_packages:
   - 'certbot'
+user_groups:
+  - 'certbot'
+users:
+  - 'certbot'
+disable_services:
+  - 'certbot.timer'
+stop_services:
+  - 'certbot.timer'
+adjust_files:
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               'u=rwX,g=rX,o=rX'
+    path:               '/var/log/letsencrypt'
+    recurse:            True
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               'u=rwX,g=rX,o=rX'
+    path:               '/var/lib/letsencrypt'
+    recurse:            True
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               'u=rwX,g=rX,o=rX'
+    path:               '/etc/letsencrypt'
+    recurse:            True
+template_files:
+  - owner:              'root'
+    group:              'root'
+    mode:               '0644'
+    src:                'templates/cron.d/certbot.j2'
+    dest:               '/etc/cron.d/certbot'
+  - owner:              'root'
+    group:              'root'
+    mode:               '0755'
+    src:                'templates/bin/certbot_cronjob.j2'
+    dest:               '/usr/local/bin/certbot_cronjob'
+commands:
+  - user:               'certbot'
+    command:            '/usr/local/bin/certbot_cronjob'

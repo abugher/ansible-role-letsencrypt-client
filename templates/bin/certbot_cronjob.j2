@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Wildcards will not work without DNS interaction.
+certbot certonly -q -d --webroot -m 'aaron@bugher.net' --agree-tos --no-eff-email '{{ domain }}' -d '*.{{ domain }}'{% for domain_alias in domain_aliases %} -d '{{ domain_alias }}' -d '*.{{ domain_alias }}'{% endfor %}
