@@ -43,8 +43,8 @@ template_files:
   - owner:              'root'
     group:              'root'
     mode:               '0755'
-    src:                'templates/bin/certbot_cronjob.j2'
-    dest:               '/usr/local/bin/certbot_cronjob'
+    src:                'templates/bin/certbot-cronjob.j2'
+    dest:               '/usr/local/bin/certbot-cronjob'
 commands:
   - user:               'certbot'
-    command:            '/usr/local/bin/certbot_cronjob'
+    command:            '/usr/local/bin/certbot-cronjob'
