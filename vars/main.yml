@@ -28,6 +28,12 @@ adjust_files:
     mode:               'u=rwX,g=rX,o=rX'
     path:               '/etc/letsencrypt'
     recurse:            True
+create_files:
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               '0755'
+    state:              'directory'
+    path:               '/usr/share/nginx/letsencrypt'
 template_files:
   - owner:              'root'
     group:              'root'

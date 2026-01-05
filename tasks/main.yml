@@ -5,5 +5,6 @@
 - include_tasks:        '../tasks/disable_services.yml'
 - include_tasks:        '../tasks/stop_services.yml'
 - include_tasks:        '../tasks/adjust_files.yml'
-#- include_tasks:        '../tasks/template_files.yml'
-#- include_tasks:        '../tasks/commands.yml'
+- include_tasks:        '../tasks/create_files.yml'
+- include_tasks:        '../tasks/template_files.yml'
+- include_tasks:        '../tasks/commands.yml'
