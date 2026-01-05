@@ -1,5 +1,11 @@
 #!/bin/bash
 
-# Wildcard subdomains will not work with web validation and require DNS validation instead.
+# Wildcard subdomains will not work with web validation and require DNS
+# validation instead.
 
-certbot certonly -q --expand --cert-name '{{ inventory_hostname }}.{{ domain }}' --key-type 'rsa' --rsa-key-size '4096' --webroot --webroot-path '/usr/share/nginx/letsencrypt' -m 'aaron@bugher.net' --agree-tos --no-eff-email -d '{{ inventory_hostname }}.{{ domain }}'{% for hostname in hostvars[inventory_hostname]['aliases']|default([]) %} -d '{{ hostname }}.{{ domain }}'{% endfor %}{% for domain_alias in domain_aliases %} -d '{{ inventory_hostname }}.{{ domain_alias }}'{% for hostname in hostvars[inventory_hostname]['aliases']|default([]) %} -d '{{ hostname }}.{{ domain_alias }}'{% endfor %}{% endfor %}
+# With -q, this should produce no output unless errors occur.  Logging already
+# goes to:  /var/log/letsencrypt.log
+
+certbot certonly -q --expand --cert-name '{{ inventory_hostname }}.{{ domain }}' --key-type 'rsa' --rsa-key-size '4096' --webroot --webroot-path '/usr/share/nginx/letsencrypt' -m 'aaron@bugher.net' --agree-tos --no-eff-email -d '{{ inventory_hostname }}.{{ domain }}'{% for hostname in hostvars[inventory_hostname]['aliases']|default([]) %} -d '{{ hostname }}.{{ domain }}'{% endfor %}{% for domain_alias in domain_aliases %} -d '{{ inventory_hostname }}.{{ domain_alias }}'{% for hostname in hostvars[inventory_hostname]['aliases']|default([]) %} -d '{{ hostname }}.{{ domain_alias }}'{% endfor %}{% endfor %} > /var/log/certbot.log 2>&1; ret="${?}"
+
+echo "${ret}" > /var/log/certbot.ret
