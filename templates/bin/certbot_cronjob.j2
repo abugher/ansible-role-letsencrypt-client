@@ -2,4 +2,6 @@
 
 # Wildcard subdomains will not work with web validation and require DNS validation instead.
 
+# The first domain specified is the name used in file paths.
+
 certbot certonly -q --expand --webroot --webroot-path '/usr/share/nginx/letsencrypt' -m 'aaron@bugher.net' --agree-tos --no-eff-email -d '{{ inventory_hostname }}.{{ domain }}'{% for hostname in hostvars[inventory_hostname]['aliases']|default([]) %} -d '{{ hostname }}.{{ domain }}'{% endfor %}{% for domain_alias in domain_aliases %} -d '{{ inventory_hostname }}.{{ domain_alias }}'{% for hostname in hostvars[inventory_hostname]['aliases']|default([]) %} -d '{{ hostname }}.{{ domain_alias }}'{% endfor %}{% endfor %}
