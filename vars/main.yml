@@ -15,17 +15,17 @@ stop_services:
 adjust_files:
   - owner:              'certbot'
     group:              'certbot'
-    mode:               'u=rwX,g=rX,o=rX'
+    mode:               'u=rwX'
     path:               '/var/log/letsencrypt'
     recurse:            True
   - owner:              'certbot'
     group:              'certbot'
-    mode:               'u=rwX,g=rX,o=rX'
+    mode:               'u=rwX'
     path:               '/var/lib/letsencrypt'
     recurse:            True
   - owner:              'certbot'
     group:              'certbot'
-    mode:               'u=rwX,g=rX,o=rX'
+    mode:               'u=rwX'
     path:               '/etc/letsencrypt'
     recurse:            True
 create_files:
