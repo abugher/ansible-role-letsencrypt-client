@@ -12,6 +12,29 @@ disable_services:
   - 'certbot.timer'
 stop_services:
   - 'certbot.timer'
+create_files:
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               '0755'
+    state:              'directory'
+    path:               '/usr/share/nginx/letsencrypt'
+  # The /etc structure would be created by certbot, but it would set
+  # unnecessarily restrictive permissions on the live and archive directories.
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               '0755'
+    state:              'directory'
+    path:               '/etc/letsencrypt'
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               '0755'
+    state:              'directory'
+    path:               '/etc/letsencrypt/live'
+  - owner:              'certbot'
+    group:              'certbot'
+    mode:               '0755'
+    state:              'directory'
+    path:               '/etc/letsencrypt/archive'
 adjust_files:
   - owner:              'certbot'
     group:              'certbot'
@@ -28,12 +51,6 @@ adjust_files:
     mode:               'u=rwX'
     path:               '/etc/letsencrypt'
     recurse:            True
-create_files:
-  - owner:              'certbot'
-    group:              'certbot'
-    mode:               '0755'
-    state:              'directory'
-    path:               '/usr/share/nginx/letsencrypt'
 template_files:
   - owner:              'root'
     group:              'root'
